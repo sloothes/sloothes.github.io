@@ -1,1 +1,1 @@
-# sloothes.github.io
+# sloothes.com

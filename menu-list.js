@@ -2,12 +2,6 @@
 
     var list = {
 
-        "Pages": {
-            "Sitemap": [
-                ["Home", "/home"],
-            ],
-        },
-
         "Menu": {
             "Sex": [
                 ["Male", "/gender/male"],
@@ -20,13 +14,16 @@
                 ["Jump", "/action/jump"],
             ],
             "Controls": [
-                ["Back",  "/turn/back"],
                 ["Left",  "/turn/left"],
+                ["Back",  "/turn/back"],
                 ["Right", "/turn/right"],
                 ["Front", "/turn/front"],
             ],
+            "Pages": [
+                ["Home", "/home"],
+            ],
 
-            "User": [
+            "Users": [
                 ["Login", "/user/login"],
                 ["Signup", "/user/signup"],
                 ["Logout", "/user/logout"],

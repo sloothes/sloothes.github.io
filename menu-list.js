@@ -2,7 +2,7 @@
 
     var list = {
 
-        "Pages": {
+        "Sitemap": {
             "Pages": [
                 ["Home", "/home"],
             ],

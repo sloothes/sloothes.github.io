@@ -101,6 +101,29 @@
         goTo( decodeUrl(hash[0]), decodeUrl(hash[1]), decodeUrl(member[0]), decodeUrl(member.length > 1 ? member[1] : '') );
     }
 
+    function storeTo( section, category, name, value, member ) {
+        var parts, location;
+        //  Fully resolve links that only provide a name.
+        if (arguments.length == 1) {
+            //  Resolve links of the form "Class.member".
+            if (section.indexOf(MEMBER_DELIMITER) !== -1) {
+                parts = section.split(MEMBER_DELIMITER)
+                section = parts[0];
+                member = parts[1];
+            }
+            location = nameCategoryMap[section];
+            if (!location) return;
+            section = location.section;
+            category = location.category;
+            name = location.name;
+            value = location.value;
+        }
+        var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name) + (!!member ? MEMBER_DELIMITER + encodeUrl(member) : "");
+        store( category, value );
+        debugMode && console.log( category, store(category) );
+        panel.classList.add( "collapsed" );
+    }
+
     for ( var section in list ) {
         var h2 = document.createElement( "h2" );
         h2.textContent = section;

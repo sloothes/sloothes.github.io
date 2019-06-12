@@ -1,1 +1,1 @@
-# sloothes.com
+# sloothes

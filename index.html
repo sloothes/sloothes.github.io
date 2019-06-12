@@ -268,10 +268,10 @@
             name = location.name;
         }
 
-        var title = 'sloothes - ' + section + ' - ' + name;
-        var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name); 
+        //var title = 'sloothes - ' + section + ' - ' + name;
+        //var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name); 
 
-        window.location.pathname = url; 
+        window.location.pathname = pages[ section ][ category ][ name ];
 
         panel.classList.add( 'collapsed' );
 

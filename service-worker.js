@@ -73,6 +73,8 @@
                 //  "json._id" included.
                     collection.insert(json, function(err){
                         if (err) throw err;
+                    }).then(function(doc){
+                        debugMode && console.log({"result":doc});
                     });
                 }).catch(function(err){
                     console.error(err);
@@ -102,6 +104,8 @@
         //  debugMode && console.log({"doc":doc});
             collection.insert(doc, function(err){
                 if (err) throw err;
+            }).then(function(doc){
+                debugMode && console.log({"result":doc});
             });
 
         }).catch(function(err){

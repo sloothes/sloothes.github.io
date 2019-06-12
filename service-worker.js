@@ -72,6 +72,8 @@
                     return response.json();
                 }).then(function(json){
                 //  "json._id" included.
+                    json.sourceFile = url; // important!
+
                     collection.insert(json, function(err){
                         if (err) throw err;
                     }).then(function(){

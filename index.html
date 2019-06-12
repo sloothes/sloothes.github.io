@@ -87,12 +87,6 @@
             "SiteMap": [
                 ["Home", "/home"],
             ],
-
-            "Users": [
-                ["Login", "/user/login"],
-                ["Signup", "/user/signup"],
-                ["Logout", "/user/logout"],
-            ],
         },
 
     };
@@ -268,10 +262,9 @@
             name = location.name;
         }
 
-        //var title = 'sloothes - ' + section + ' - ' + name;
-        //var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name); 
+        var url = pages[ section ][ category ][ name ];
 
-        window.location.pathname = pages[ section ][ category ][ name ];
+        window.location.pathname = url;
 
         panel.classList.add( 'collapsed' );
 

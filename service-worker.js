@@ -183,8 +183,6 @@
 
     }
 
-    install();
-
     self.addEventListener("install", async function(e){
 
         await install();

@@ -20,11 +20,11 @@
 
     const Home = nameCategoryMap["Home"];
 
-    $(Home.element).on("click", function (){
+    $(Home.element).on("click", function(){
         location.pathname = Home.value;
     });
 
-}();
+})();
 
 (function(){
 

@@ -54,6 +54,10 @@
 
 `);
 
+</script>
+
+<script>
+
     var serviceWorker = navigator.serviceWorker;
 
     if ( serviceWorker ) {
@@ -67,8 +71,7 @@
     function serviceWorkerRegistration( serviceWorker, options ){
 
         if (!serviceWorker) {
-            console.log(
-`Oh no! Your browser doesn't support a feature needed to run this app (navigator.serviceWorker). 
+            console.log(`Oh no! Your browser doesn't support a feature needed to run this app (navigator.serviceWorker). 
 Try using a different browser.`);
             return;
         }
@@ -89,15 +92,18 @@ Try using a different browser.`);
 
                 newSWController.addEventListener("statechange", function(){
                     debugMode && console.log({"new sw controller state": this.state});
-                    if ( this.state === "activated") {}
+                    if ( this.state === "activated") { 
+                        document.getElementById("viewer").src = "/scene/";
+                    }
                 });
 
             });
 
         //  Refresh to activate the worker.
-            if (!reg.active) {
-                location.reload(); return;
-            } 
+        //  if (!reg.active) {
+        //      location.reload(); 
+        //      return;
+        //  } 
 
         }).catch(function(err) { 
             console.error(err);
@@ -145,7 +151,7 @@ Try using a different browser.`);
 
 <section class="mbr-section" id="body-section">
 
-    <iframe id="viewer" src="/scene/"></iframe>
+    <iframe id="viewer"></iframe>
     <div class="side-panel" id="right-side" style="top:0;">
         <div id="right-side-pinbtn" title="click this to pin/unpin panel"></div>
 
@@ -202,14 +208,15 @@ Try using a different browser.`);
 <script src="/js/alerts.js"></script>
 <script src="/js/side-panels.js"></script>
 
-<script src="/menu.js"></script>
-
 <script>
 
+    $("viewer").attr({src:"/scene/"});
     $("#login-tab").load("/login-tab/");
     $("#control-tab").load("/control-tab/");
 
 </script>
+
+<script src="/menu.js"></script>
 
 </body>
 </html>

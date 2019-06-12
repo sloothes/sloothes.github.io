@@ -185,12 +185,17 @@
 
     self.addEventListener("install", async function(e){
 
-        await install();
+        install();
 
-        self.skipWaiting();
+        activate();
 
     });
 
+    self.addEventListener("activate", async function(e){
+
+        self.clients.claim();
+
+    });
 
 
 

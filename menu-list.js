@@ -1,6 +1,13 @@
 //  menu-list.js
 
     var list = {
+
+        "Pages": {
+            "Pages": [
+                ["Home", "/home"],
+            ],
+        },
+
         "Menu": {
             "Sex": [
                 ["Male", "/gender/male"],

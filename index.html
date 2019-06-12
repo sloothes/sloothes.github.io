@@ -271,10 +271,7 @@
         var title = 'sloothes - ' + section + ' - ' + name;
         var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name); 
 
-        window.location.hash = url;
-        window.document.title = title;
-
-        window.location.pathname = pages[ section ][ category ][ name ]; 
+        window.location.pathname = url; 
 
         panel.classList.add( 'collapsed' );
 

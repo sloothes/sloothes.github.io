@@ -1,3 +1,4 @@
+
     self.version = 1.0;
     var debugMode = true;
 
@@ -73,8 +74,8 @@
                 //  "json._id" included.
                     collection.insert(json, function(err){
                         if (err) throw err;
-                    }).then(function(doc){
-                        debugMode && console.log({"result":doc});
+                    }).then(function(){
+                        debugMode && console.log({"success":json});
                     });
                 }).catch(function(err){
                     console.error(err);
@@ -104,8 +105,8 @@
         //  debugMode && console.log({"doc":doc});
             collection.insert(doc, function(err){
                 if (err) throw err;
-            }).then(function(doc){
-                debugMode && console.log({"result":doc});
+            }).then(function(){
+                debugMode && console.log({"success":doc});
             });
 
         }).catch(function(err){

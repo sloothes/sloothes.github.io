@@ -3,6 +3,7 @@
 //  var viewer = document.getElementById( "viewer" );
     var SceneWindow = viewer.contentWindow; // important!
     var SceneDocument = viewer.contentDocument; // important!
+
     $(viewer.contentWindow).on("load", function(){
         db = this.db;
         MW = this.MW;
@@ -17,8 +18,18 @@
 
 (function(){
 
-    var Male    = nameCategoryMap["Male"];
-    var Female  = nameCategoryMap["Female"];
+    const Home = nameCategoryMap["Home"];
+
+    $(Home.element).on("click", function (){
+        location.pathname = Home.value;
+    });
+
+}();
+
+(function(){
+
+    const Male  = nameCategoryMap["Male"];
+    const Female = nameCategoryMap["Female"];
     const Run   = nameCategoryMap["Run"];
     const Idle  = nameCategoryMap["Idle"];
     const Walk  = nameCategoryMap["Walk"];

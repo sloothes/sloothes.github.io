@@ -59,19 +59,21 @@
         "/animations/female/jump.json",
     ];
 
-    async function installOutfits(options){
+    function installOutfits(options){
 
         caches.open(options.name).then(async function(cache){
             await cache.addAll( options.URLS );
-        }).then(function(){
+        }).then(async function(){
 
             var collection = db.collection(options.name);
-            options.URLS.forEach(async function(url){
+            await options.URLS.forEach(function(url){
                 caches.match(url).then(function(response){
                     return response.json();
                 }).then(function(json){
                 //  "json._id" included.
-                    collection.insert(json, function(err){if (err) throw err;});
+                    collection.insert(json, function(err){
+                        if (err) throw err;
+                    });
                 }).catch(function(err){
                     console.error(err);
                 });
@@ -80,7 +82,7 @@
         });
     }
 
-    async function installAnimations(options){
+    function installAnimations(options){
 
         caches.open(options.name).then(async function(cache){
             await cache.addAll( options.URLS );
@@ -108,37 +110,37 @@
 
     }
 
-    function install(){
+    async function install(){
 
-        installOutfits({
+        await installOutfits({
             name:"male",
             URLS: skinned.male,
         });
 
-        installOutfits({
+        await installOutfits({
             name:"female",
             URLS: skinned.female,
         });
 
-        installOutfits({
+        await installOutfits({
             name:"skeleton",
             URLS: skinned.skeleton,
         });
 
 
-        installAnimations({
+        await installAnimations({
             _id:"basic",
             name:"animations",
             URLS:animations.basic,
         });
 
-        installAnimations({
+        await installAnimations({
             _id:"male",
             name:"animations",
             URLS:animations.male,
         });
 
-        installAnimations({
+        await installAnimations({
             _id:"female",
             name:"animations",
             URLS:animations.female,
@@ -183,6 +185,13 @@
 
     install();
 
+    self.addEventListener("install", async function(e){
+
+        await install();
+
+        self.skipWaiting();
+
+    });
 
 
 

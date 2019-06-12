@@ -8,30 +8,71 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <meta name="description" contents="Slutty Ladies Observing Outgoing Trying Have Expressive Sex">
-
     <title>sloothes</title>
-
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootbox-dialoges.css">
-    <link rel="stylesheet" href="/css/side-panels.css">
-    <link rel="stylesheet" href="/css/messg.css" >
-    <link rel="stylesheet" href="/css/spectrum.css">
-    <link rel="stylesheet" href="/css/colorpicker.css">
-    <link rel="stylesheet" href="/css/spinner.css">
-    <link rel="stylesheet" href="/css/jquery-ui.css">
-    <link rel="stylesheet" href="/css/alerts.css">
-    <link rel="stylesheet" href="/css/panel-ui.css">
-    <link rel="stylesheet" href="/css/anywhere3d.css">
-    <link rel="stylesheet" href="/css/jquery.Jcrop.css">
-    <link rel="stylesheet" href="/css/menu-menubar.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/style.css">
-
-    <script src="/socketcluster.js"></script>
-    <script src="/sc-codec-min-bin.js"></script>
-
-    <script>
-        debugMode = true;
-    </script>
 
 </head>
+
+<body>
+
+<script>
+
+    var debugMode = true;
+    var serviceWorker = navigator.serviceWorker;
+
+/*
+    if ( serviceWorker.controller ) {
+        serviceWorkerRegistration( serviceWorker, {
+            opt: {scope: "/"},
+            url: "/service-worker.js",
+        });
+    }
+*/
+
+    if ( serviceWorker.controller ) {
+        serviceWorker.controller.addEventListener("statechange", function(){
+            debugMode && console.log({"old sw controller state": this.state});
+        });
+    }
+
+
+    function serviceWorkerRegistration( serviceWorker, options ){
+
+        if (!serviceWorker) {
+            console.log(
+`Oh no! Your browser doesn't support a feature needed to run this app (navigator.serviceWorker). 
+Try using a different browser.`);
+            return;
+        }
+
+        serviceWorker.register(options.url, options.opt).then(function (reg) {
+
+            reg.addEventListener("statechange", function(){
+
+                debugMode && console.log({"reg active state": reg.active.state});
+
+            });
+
+            reg.addEventListener("updatefound", function(){
+
+                debugMode && console.log("new service worker update found:");
+
+                var newSWController = reg.installing;
+
+                newSWController.addEventListener("statechange", function(){
+                    debugMode && console.log({"new sw controller state": this.state});
+                    if ( this.state === "activated") {}
+                });
+
+            });
+
+        }).catch(function(err) { 
+            console.error(err);
+        });
+
+    }
+
+</script>
+
+</body>
+</html>

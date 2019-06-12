@@ -1,4 +1,4 @@
-    self.version = 1.3;
+    self.version = 1.0;
     var debugMode = true;
 
     self.importScripts(

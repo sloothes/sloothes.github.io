@@ -20,16 +20,10 @@
     var debugMode = true;
     var serviceWorker = navigator.serviceWorker;
 
-    if ( serviceWorker.controller ) {
+    if ( serviceWorker ) {
         serviceWorkerRegistration( serviceWorker, {
             opt: {scope: "/"},
             url: "/service-worker.js",
-        });
-    }
-
-    if ( serviceWorker.controller ) {
-        serviceWorker.controller.addEventListener("statechange", function(){
-            debugMode && console.log({"old sw controller state": this.state});
         });
     }
 

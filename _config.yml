@@ -1,1 +1,4 @@
 theme: jekyll-theme-minimal
+title: sloothes.com
+description: The sloothes website
+logo: ./favicon.ico

@@ -1,5 +1,5 @@
 
-    self.version = 1.0;
+    self.version = 2.0;
     var debugMode = true;
 
     self.importScripts(
@@ -8,150 +8,40 @@
         "/js/AW3D.db.js",
     );
 
-    var skinned = {};
+    async function installDB(url){
 
-    skinned.male = [
-        "/skinned/male/body.json",
-        "/skinned/male/eyes.json",
-        "/skinned/male/hairs.json",
-        "/skinned/male/underwears.json",
-        "/skinned/male/costume.json",
-        "/skinned/male/trousers.json",
-        "/skinned/male/shoes.json",
-    ];
+        var cache = await caches.open("databases")
+        .then(async function(cache){ return cache; });
 
-    skinned.female = [
-        "/skinned/female/body.json",
-        "/skinned/female/eyes.json",
-        "/skinned/female/hairs.json",
-        "/skinned/female/stockings.json",
-        "/skinned/female/underwears.json",
-        "/skinned/female/dress.json",
-        "/skinned/female/costume.json",
-        "/skinned/female/trousers.json",
-        "/skinned/female/shoes.json",
-    ];
+        await cache.add(url);
 
-    skinned.skeleton = [
-        "/skinned/skeleton/bones.json",
-        "/skinned/skeleton/skeleton.json",
-    ];
-
-    var animations = {};
-
-    animations.basic = [
-        "/animations/basic/idle.json",
-        "/animations/basic/walk.json",
-        "/animations/basic/run.json",
-        "/animations/basic/jump.json",
-    ];
-
-    animations.male = [
-        "/animations/male/idle.json",
-        "/animations/male/walk.json",
-        "/animations/male/run.json",
-        "/animations/male/jump.json",
-    ];
-
-    animations.female = [
-        "/animations/female/idle.json",
-        "/animations/female/walk.json",
-        "/animations/female/run.json",
-        "/animations/female/jump.json",
-    ];
-
-    function installOutfits(options){
-
-        caches.open(options.name).then(async function(cache){
-            await cache.addAll( options.URLS );
-        }).then(async function(){
-
-            var collection = db.collection(options.name);
-            await options.URLS.forEach(function(url){
-                caches.match(url).then(function(response){
-                    return response.json();
-                }).then(function(json){
-                //  "json._id" included.
-                    json.sourceFile = url; // important!
-
-                    collection.insert(json, function(err){
-                        if (err) throw err;
-                    }).then(function(){
-                        debugMode && console.log({"success":json});
-                    });
-                }).catch(function(err){
-                    console.error(err);
-                });
-            });
-
+        var collections = await cache.match(url)
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+            return json;
         });
-    }
 
-    function installAnimations(options){
+        debugMode && console.log({"collections":collections});
 
-        caches.open(options.name).then(async function(cache){
-            await cache.addAll( options.URLS );
-        }).then(async function(){
+        for (var name in collections) {
 
-            var doc = {_id:options._id};
-            var collection = db.collection(options.name);
-            for (var i=0; i < options.URLS.length; i++){
-                await caches.match(options.URLS[i])
-                .then(function(response){
-                    return response.json();
-                }).then(function(json){
-                    doc[json.name] = json;
-                });
-            }
-
-        //  debugMode && console.log({"doc":doc});
-            collection.insert(doc, function(err){
+            var collection = db.collection(name);
+            await collection.insert(collections[name], function(err){
                 if (err) throw err;
-            }).then(function(){
-                debugMode && console.log({"success":doc});
+            }).catch(function(err){
+                console.error(err);
             });
 
-        }).catch(function(err){
-            console.error(err);
-        });
+        }
+
+        return;
 
     }
 
     async function install(){
 
-        await installOutfits({
-            name:"male",
-            URLS: skinned.male,
-        });
-
-        await installOutfits({
-            name:"female",
-            URLS: skinned.female,
-        });
-
-        await installOutfits({
-            name:"skeleton",
-            URLS: skinned.skeleton,
-        });
-
-
-        await installAnimations({
-            _id:"basic",
-            name:"animations",
-            URLS:animations.basic,
-        });
-
-        await installAnimations({
-            _id:"male",
-            name:"animations",
-            URLS:animations.male,
-        });
-
-        await installAnimations({
-            _id:"female",
-            name:"animations",
-            URLS:animations.female,
-        });
+        await installDB("/AW3D_db/dev_DB_v3.6.json");
 
     }
 

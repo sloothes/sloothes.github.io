@@ -160,9 +160,9 @@ function unistall(){
 
 self.addEventListener("install", async function(e){
 
-//  await install();
+    await install();
 
-//  await activate();
+    await activate();
 
 });
 

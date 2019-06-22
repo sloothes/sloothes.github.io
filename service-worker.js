@@ -65,7 +65,7 @@ async function install(){
         db.collection("animations")
         .insert(json, function(err){
             if (err) throw err;
-        }).catch(err){
+        }).catch(function(err){
             console.error(err);
         });
     });
@@ -77,7 +77,7 @@ async function install(){
         db.collection("male")
         .insert(json, function(err){
             if (err) throw err;
-        }).catch(err){
+        }).catch(function(err){
             console.error(err);
         });
     });
@@ -89,7 +89,7 @@ async function install(){
         db.collection("female")
         .insert(json, function(err){
             if (err) throw err;
-        }).catch(err){
+        }).catch(function(err){
             console.error(err);
         });
     });
@@ -101,7 +101,7 @@ async function install(){
         db.collection("skeleton")
         .insert(json, function(err){
             if (err) throw err;
-        }).catch(err){
+        }).catch(function(err){
             console.error(err);
         });
     });
@@ -113,7 +113,7 @@ async function install(){
         db.collection("materials")
         .insert(json, function(err){
             if (err) throw err;
-        }).catch(err){
+        }).catch(function(err){
             console.error(err);
         });
     });

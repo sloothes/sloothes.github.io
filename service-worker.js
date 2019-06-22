@@ -1,98 +1,104 @@
 
-    self.version = 2.0;
-    var debugMode = true;
+self.version = 3.0;
+var debugMode = true;
 
-    self.importScripts(
-        "/js/Objectid.js",
-        "/js/zangodb.min.js",
-        "/js/AW3D.db.js",
-    );
+self.importScripts(
+    "/js/Objectid.js",
+    "/js/zangodb.min.js",
+);
 
-    async function installDB(url){
+async function clearDB(){
 
-        var cache = await caches.open("databases")
-        .then(async function(cache){ return cache; });
+    const VERSION = 1;
+    const NAME = "AW3D";
 
-        await cache.add(url);
+    db = new zango.Db( NAME, VERSION, {
 
-        var collections = await cache.match(url)
-        .then(function(response){
-            return response.json();
-        }).then(function(json){
-            return json;
-        });
-
-        debugMode && console.log({"collections":collections});
-
-        for (var name in collections) {
-
-            var collection = db.collection(name);
-            await collection.insert(collections[name], function(err){
-                if (err) throw err;
-            }).catch(function(err){
-                console.error(err);
-            });
-
-        }
-
-        return;
-
-    }
-
-    async function install(){
-
-        await installDB("/AW3D_db/dev_DB_v3.6.json");
-
-    }
-
-    function activate(){
-
-        self.skipWaiting();
-
-    }
-
-    function getClinet(){
-
-        self.clients.matchAll().then(function(clients){
-
-            client = clients[0];
-
-            console.log({"client": client});
-
-        });
-
-    }
-
-    function unistall(){
-
-        self.registration.unregister().then(function(){
-
-            return self.clients.matchAll();
-
-        }).then(function(clients) {
-
-            clients.forEach(function(client){
-                client.navigate(client.url);
-                console.log(`service worker unistalled from client "${client.url}"`);
-            });
-
-        });
-
-    }
-
-    self.addEventListener("install", async function(e){
-
-        install();
-
-        activate();
+        male:       false,
+        female:     false,
+        skeleton:   false,
+        materials:  false,
+        textures:   false,
+        animations: false,
 
     });
 
-    self.addEventListener("activate", async function(e){
+}
 
-        self.clients.claim();
+async function install(){
+
+    await cache.match("/AW3D_db/animations.json")
+    .then(function(response){return response.json();}).then(function(json){return json;})
+    .then(function(json){db.collection("animations").insert(json);});
+
+    await cache.match("/AW3D_db/male.json")
+    .then(function(response){return response.json();}).then(function(json){return json;})
+    .then(function(json){db.collection("male").insert(json);});
+
+    await cache.match("/AW3D_db/female.json")
+    .then(function(response){return response.json();}).then(function(json){return json;})
+    .then(function(json){db.collection("female").insert(json);});
+
+    await cache.match("/AW3D_db/skeleton.json")
+    .then(function(response){return response.json();}).then(function(json){return json;})
+    .then(function(json){db.collection("skeleton").insert(json);});
+
+    await cache.match("/AW3D_db/materials.json")
+    .then(function(response){return response.json();}).then(function(json){return json;})
+    .then(function(json){db.collection("materials").insert(json);});
+
+}
+
+function activate(){
+
+    self.skipWaiting();
+
+}
+
+function getClinet(){
+
+    self.clients.matchAll().then(function(clients){
+
+        client = clients[0];
+
+        console.log({"client": client});
 
     });
+
+}
+
+function unistall(){
+
+    self.registration.unregister().then(function(){
+
+        return self.clients.matchAll();
+
+    }).then(function(clients) {
+
+        clients.forEach(function(client){
+            client.navigate(client.url);
+            console.log(`service worker unistalled from client "${client.url}"`);
+        });
+
+    });
+
+}
+
+self.addEventListener("install", async function(e){
+
+    await clearDB();
+
+//  await install();
+
+//  await activate();
+
+});
+
+self.addEventListener("activate", async function(e){
+
+    self.clients.claim();
+
+});
 
 
 

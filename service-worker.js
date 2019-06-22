@@ -120,7 +120,6 @@ async function install(){
 
     debugMode && console.log(`Database ${db.name} (v${db.version}) ready for use.`);
 
-    return;
 }
 
 function activate(){

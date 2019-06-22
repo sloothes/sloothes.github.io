@@ -23,7 +23,7 @@ async function clearDB(){
 
     });
 
-    db.close();
+    return db;
 }
 
 async function install(){
@@ -86,6 +86,8 @@ function unistall(){
 }
 
 self.addEventListener("install", async function(e){
+
+    self.db = await clearDB();
 
 //  await install();
 

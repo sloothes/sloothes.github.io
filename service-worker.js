@@ -48,8 +48,6 @@ async function install(){
         console.error(err);
     });
 
-
-
     var cache = await caches.open("collections").then(function(cache){return cache;});
 
     await cache.addAll([

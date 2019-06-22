@@ -5,26 +5,9 @@ var debugMode = true;
 self.importScripts(
     "/js/Objectid.js",
     "/js/zangodb.min.js",
+    "/js/AW3D.db.js",
 );
 
-async function clearDB(){
-
-    const VERSION = 2;
-    const NAME = "AW3D";
-
-    var db = new zango.Db( NAME, VERSION, {
-
-        male:       false,
-        female:     false,
-        skeleton:   false,
-        materials:  false,
-        textures:   false,
-        animations: false,
-
-    });
-
-    return db;
-}
 
 async function install(){
 
@@ -87,7 +70,7 @@ function unistall(){
 
 self.addEventListener("install", async function(e){
 
-    self.db = await clearDB();
+    db.drop();
 
 //  await install();
 

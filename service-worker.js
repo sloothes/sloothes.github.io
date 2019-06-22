@@ -11,6 +11,16 @@ self.importScripts(
 
 async function install(){
 
+    var cache = await caches.open("collections").then(function(cache){return cache;});
+
+    await cache.addAll([
+        "/AW3D_db/male.json",
+        "/AW3D_db/female.json",
+        "/AW3D_db/skeleton.json",
+        "/AW3D_db/materials.json",
+        "/AW3D_db/animations.json",
+    ]);
+
     await cache.match("/AW3D_db/animations.json")
     .then(function(response){return response.json();}).then(function(json){return json;})
     .then(function(json){db.collection("animations").insert(json);});
@@ -70,8 +80,9 @@ function unistall(){
 
 self.addEventListener("install", async function(e){
 
-    db.drop();
-    debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
+    await db.drop().then(function(){
+        debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
+    });
 
 //  await install();
 

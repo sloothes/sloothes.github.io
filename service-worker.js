@@ -10,14 +10,6 @@ self.importScripts(
 
 async function install(){
 
-    await cache.addAll([
-        "/AW3D_db/male.json",
-        "/AW3D_db/female.json",
-        "/AW3D_db/skeleton.json",
-        "/AW3D_db/materials.json",
-        "/AW3D_db/animations.json",
-    ]);
-
     db = new zango.Db( "AW3D", {
 
         male:       false,
@@ -56,7 +48,17 @@ async function install(){
         console.error(err);
     });
 
+
+
     var cache = await caches.open("collections").then(function(cache){return cache;});
+
+    await cache.addAll([
+        "/AW3D_db/male.json",
+        "/AW3D_db/female.json",
+        "/AW3D_db/skeleton.json",
+        "/AW3D_db/materials.json",
+        "/AW3D_db/animations.json",
+    ]);
 
     await cache.match("/AW3D_db/animations.json")
     .then(function(response){return response.json();}).then(function(json){return json;})

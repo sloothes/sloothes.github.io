@@ -162,7 +162,7 @@ self.addEventListener("install", async function(e){
 
     await install();
 
-    await activate();
+    activate();
 
 });
 

@@ -71,6 +71,7 @@ function unistall(){
 self.addEventListener("install", async function(e){
 
     db.drop();
+    debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
 
 //  await install();
 

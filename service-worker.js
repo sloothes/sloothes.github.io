@@ -5,7 +5,6 @@ var debugMode = true;
 self.importScripts(
     "/js/Objectid.js",
     "/js/zangodb.min.js",
-    "/js/AW3D.db.js",
 );
 
 
@@ -20,6 +19,27 @@ async function install(){
         "/AW3D_db/materials.json",
         "/AW3D_db/animations.json",
     ]);
+
+    db = new zango.Db( "AW3D", {
+
+        male:       false,
+        female:     false,
+        skeleton:   false,
+        materials:  false,
+        textures:   false,
+        animations: false,
+
+    });
+
+    await db.open().then(function(){
+        debugMode && console.log(`Database ${db.name} (v${db.version}) opened.`);
+    });
+
+    await db.drop().then(function(){
+        debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
+    });
+
+    await self.importScripts("/js/AW3D.db.js");
 
     await cache.match("/AW3D_db/animations.json")
     .then(function(response){return response.json();}).then(function(json){return json;})
@@ -79,12 +99,6 @@ function unistall(){
 }
 
 self.addEventListener("install", async function(e){
-
-    await db.drop().then(function(){
-        debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
-    });
-
-    self.importScripts("/js/AW3D.db.js");
 
 //  await install();
 

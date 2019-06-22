@@ -84,6 +84,8 @@ self.addEventListener("install", async function(e){
         debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
     });
 
+    self.importScripts("/js/AW3D.db.js");
+
 //  await install();
 
 //  await activate();

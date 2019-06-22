@@ -43,7 +43,7 @@ async function install(){
     await db.open(function(err, database){
         if (err) console.error(err);
     }).then( function(){
-        debugMode && console.log(`Database ${db.name} (v${db.version}) ready for use.`);
+        debugMode && console.log(`Database ${db.name} (v${db.version}) ready for install.`);
     }).catch(function(err){
         console.error(err);
     });
@@ -59,24 +59,66 @@ async function install(){
     ]);
 
     await cache.match("/AW3D_db/animations.json")
-    .then(function(response){return response.json();}).then(function(json){return json;})
-    .then(function(json){db.collection("animations").insert(json);});
+    .then(function(response){
+        return response.json();
+    }).then(function(json){
+        db.collection("animations")
+        .insert(json, function(err){
+            if (err) throw err;
+        }).catch(err){
+            console.error(err);
+        });
+    });
 
     await cache.match("/AW3D_db/male.json")
-    .then(function(response){return response.json();}).then(function(json){return json;})
-    .then(function(json){db.collection("male").insert(json);});
+    .then(function(response){
+        return response.json();
+    }).then(function(json){
+        db.collection("male")
+        .insert(json, function(err){
+            if (err) throw err;
+        }).catch(err){
+            console.error(err);
+        });
+    });
 
     await cache.match("/AW3D_db/female.json")
-    .then(function(response){return response.json();}).then(function(json){return json;})
-    .then(function(json){db.collection("female").insert(json);});
+    .then(function(response){
+        return response.json();
+    }).then(function(json){
+        db.collection("female")
+        .insert(json, function(err){
+            if (err) throw err;
+        }).catch(err){
+            console.error(err);
+        });
+    });
 
     await cache.match("/AW3D_db/skeleton.json")
-    .then(function(response){return response.json();}).then(function(json){return json;})
-    .then(function(json){db.collection("skeleton").insert(json);});
+    .then(function(response){
+        return response.json();
+    }).then(function(json){
+        db.collection("skeleton")
+        .insert(json, function(err){
+            if (err) throw err;
+        }).catch(err){
+            console.error(err);
+        });
+    });
 
     await cache.match("/AW3D_db/materials.json")
-    .then(function(response){return response.json();}).then(function(json){return json;})
-    .then(function(json){db.collection("materials").insert(json);});
+    .then(function(response){
+        return response.json();
+    }).then(function(json){
+        db.collection("materials")
+        .insert(json, function(err){
+            if (err) throw err;
+        }).catch(err){
+            console.error(err);
+        });
+    });
+
+    debugMode && console.log(`Database ${db.name} (v${db.version}) ready for use.`);
 
     return;
 }

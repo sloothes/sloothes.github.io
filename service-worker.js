@@ -9,10 +9,10 @@ self.importScripts(
 
 async function clearDB(){
 
-    const VERSION = 1;
+    const VERSION = 2;
     const NAME = "AW3D";
 
-    db = new zango.Db( NAME, VERSION, {
+    var db = new zango.Db( NAME, VERSION, {
 
         male:       false,
         female:     false,
@@ -23,6 +23,7 @@ async function clearDB(){
 
     });
 
+    db.close();
 }
 
 async function install(){
@@ -85,8 +86,6 @@ function unistall(){
 }
 
 self.addEventListener("install", async function(e){
-
-    await clearDB();
 
 //  await install();
 

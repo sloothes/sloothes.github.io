@@ -8,7 +8,7 @@ self.importScripts(
 );
 
 
-async function install(){
+async function drop(){
 
     db = new zango.Db( "AW3D" );
 
@@ -19,6 +19,10 @@ async function install(){
     await db.drop().then(function(){
         debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
     });
+
+}
+
+async function install(){
 
     db = new zango.Db( "AW3D", 1, {
 
@@ -150,6 +154,7 @@ function unistall(){
 
 self.addEventListener("install", async function(e){
 
+    await drop();
     await install();
 
     activate();

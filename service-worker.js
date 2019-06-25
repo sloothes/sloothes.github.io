@@ -1,5 +1,5 @@
 
-self.version = 3.1;
+self.version = 3.2;
 var debugMode = true;
 
 self.importScripts(
@@ -10,16 +10,7 @@ self.importScripts(
 
 async function install(){
 
-    db = new zango.Db( "AW3D", {
-
-        male:       false,
-        female:     false,
-        skeleton:   false,
-        materials:  false,
-        textures:   false,
-        animations: false,
-
-    });
+    db = new zango.Db( "AW3D" );
 
     await db.open().then(function(){
         debugMode && console.log(`Database ${db.name} (v${db.version}) opened.`);

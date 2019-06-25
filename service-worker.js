@@ -1,5 +1,5 @@
 
-self.version = 3.2;
+self.version = 3.3;
 var debugMode = true;
 
 self.importScripts(

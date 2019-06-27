@@ -1,12 +1,12 @@
+//  service-worker.js
 
-self.version = 3.3;
+self.version = 3.0;
 var debugMode = true;
 
 self.importScripts(
     "/js/Objectid.js",
     "/js/zangodb.min.js",
 );
-
 
 async function drop(){
 

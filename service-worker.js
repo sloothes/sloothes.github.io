@@ -1,6 +1,6 @@
 //  service-worker.js
 
-self.version = 3.1;
+self.version = 3.2;
 var debugMode = true;
 
 self.importScripts(

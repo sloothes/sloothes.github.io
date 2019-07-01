@@ -177,34 +177,10 @@
                 var a = document.createElement( 'a' );
                 a.setAttribute( 'href', '#' );
 
-                ( function( section, category, name, member ) {
+                (function( s, c, p ) {
 
                     a.addEventListener( "click", function( e ) {
-                        var parts, location;
-
-                    //  Fully resolve links that only provide a name
-                        if (arguments.length == 1) {
-
-                        //  Resolve links of the form 'Class.member'
-                            if (section.indexOf(MEMBER_DELIMITER) !== -1) {
-                                parts = section.split(MEMBER_DELIMITER)
-                                section = parts[0];
-                                member = parts[1];
-                            }
-
-                            location = nameCategoryMap[section];
-                            if (!location) return;
-                            section = location.section;
-                            category = location.category;
-                            name = location.name;
-                        }
-
-                        var url = pages[ section ][ category ][ name ];
-
-                        viewer.src = url;
-
-                        panel.classList.add( 'collapsed' );
-
+                        viewer.src = goTo(s, c, p);
                         e.preventDefault();
                     })
 
@@ -316,9 +292,11 @@
 
         var url = pages[ section ][ category ][ name ];
 
-        window.location.pathname = url;
+        //  window.location.pathname = url;
 
         panel.classList.add( 'collapsed' );
+        
+        return url;
 
     }
 

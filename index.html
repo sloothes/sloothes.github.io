@@ -28,13 +28,7 @@
     <link rel="stylesheet" href="/style.css">
 
     <script src="/sw.js"></script>
-
-    <script src="/js/w3.js"></script>
-    <script src="/js/store2.js"></script>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/bootbox.min.js"></script>
-    <script src="/js/DeviceDetector.js"></script>
+    <script src="/loadjs.min.js"></script>
 
 </head>
 
@@ -131,6 +125,7 @@
 </script>
 
 <script>
+
     var panel = document.getElementById( 'panel' );
     var viewer = document.getElementById( 'viewer' );
 
@@ -271,15 +266,15 @@
 
     }
 
- // Page loading.
+//  Page loading.
 
     function goTo( section, category, name, member ) {
         var parts, location;
 
-        // Fully resolve links that only provide a name
+    //  Fully resolve links that only provide a name
         if(arguments.length == 1) {
 
-            // Resolve links of the form 'Class.member'
+        //  Resolve links of the form 'Class.member'
             if(section.indexOf(MEMBER_DELIMITER) !== -1) {
                 parts = section.split(MEMBER_DELIMITER)
                 section = parts[0];
@@ -294,7 +289,6 @@
         }
 
         var url = pages[ section ][ category ][ name ];
-
         //  window.location.pathname = url;
 
         panel.classList.add( 'collapsed' );
@@ -316,6 +310,13 @@
     if ( window.location.hash.length > 0 ) goToHash();
 
 </script>
+
+<script src="/js/w3.js"></script>
+<script src="/js/store2.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootbox.min.js"></script>
+<script src="/js/DeviceDetector.js"></script>
 
 </body>
 </html>

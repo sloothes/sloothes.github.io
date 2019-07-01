@@ -29,7 +29,15 @@
 
     <script src="/sw.js"></script>
     <script src="/js/loadjs.min.js"></script>
-
+    <script>
+        var cssfiles = [
+            "/css/bootstrap.min.css", "/css/bootbox-dialoges.css", "/css/side-panels.css", "/css/messg.css" , 
+            "/css/spectrum.css", "/css/colorpicker.css", "/css/spinner.css", "/css/jquery-ui.css", "/css/alerts.css", 
+            "/css/panel-ui.css", "/css/anywhere3d.css", "/css/jquery.Jcrop.css", "/css/menu-menubar.css", "/css/index.css", 
+            "/style.css",
+        ]; 
+        loadjs( cssfiles, {async: false});
+    </script>
 </head>
 
 <body>
@@ -311,12 +319,21 @@
 
 </script>
 
+<script>
+    var jsfiles = [
+        "/js/w3.js", "/js/store2.js", "/js/jquery.min.js", "/js/bootstrap.min.js", "/js/bootbox.min.js", "/js/DeviceDetector.js",
+    ]; 
+    loadjs( jsfiles, {async: false});
+</script>
+
+<!--
 <script src="/js/w3.js"></script>
 <script src="/js/store2.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/bootbox.min.js"></script>
 <script src="/js/DeviceDetector.js"></script>
+-->
 
 </body>
 </html>

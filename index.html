@@ -175,18 +175,21 @@
 
                 var li = document.createElement( 'li' );
                 var a = document.createElement( 'a' );
-                a.setAttribute( 'href', '#' );
+            //  a.setAttribute( "href", "#" );
 
                 (function( s, c, p ) {
-
                     a.addEventListener( "click", function( e ) {
-                        viewer.src = goTo(s, c, p);
+                        debugMode && console.log({
+                            "section": s,
+                            "category": c,
+                            "page": p,
+                        });
+                        viewer.src = goTo( s, c, p[0] );
                         e.preventDefault();
                     })
+                })( section, category, page );
 
-                })( section, category, page[0] );
-
-                a.textContent = page[ 0 ];
+                a.textContent = page[0];
                 li.appendChild( a );
                 ul.appendChild( li );
 

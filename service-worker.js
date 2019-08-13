@@ -1,6 +1,6 @@
 //  service-worker.js
 
-self.version = 3.2;
+self.version = 3.3;
 var debugMode = true;
 
 self.importScripts(
@@ -8,21 +8,25 @@ self.importScripts(
     "/js/zangodb.min.js",
 );
 
-async function drop(){
+function drop(){
 
     db = new zango.Db( "AW3D" );
 
-    await db.open().then(function(){
+    return db.open().then(function(){
         debugMode && console.log(`Database ${db.name} (v${db.version}) opened.`);
-    });
+    }).then(function(){
 
-    await db.drop().then(function(){
-        debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
+        return db.drop().then(function(){
+            debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
+        });
+
+    }).catch(function(err){
+        console.error(err);
     });
 
 }
 
-async function install(){
+function install(){
 
     db = new zango.Db( "AW3D", 1, {
 
@@ -35,85 +39,98 @@ async function install(){
 
     });
 
-    await db.open(function(err, database){
+    return db.open(function(err, database){
         if (err) console.error(err);
     }).then( function(){
         debugMode && console.log(`Database ${db.name} (v${db.version}) ready for install.`);
     }).catch(function(err){
         console.error(err);
-    });
+    }).then(function(){
 
-    var cache = await caches.open("collections").then(function(cache){return cache;});
-
-    await cache.addAll([
-        "/AW3D_db/male.json",
-        "/AW3D_db/female.json",
-        "/AW3D_db/skeleton.json",
-        "/AW3D_db/materials.json",
-        "/AW3D_db/animations.json",
-    ]);
-
-    await cache.match("/AW3D_db/animations.json")
-    .then(function(response){
-        return response.json();
-    }).then(function(json){
-        db.collection("animations")
-        .insert(json, function(err){
-            if (err) throw err;
-        }).catch(function(err){
-            console.error(err);
+        return caches.open("collections")
+        .then(function(cache){
+            return cache;
         });
-    });
 
-    await cache.match("/AW3D_db/male.json")
-    .then(function(response){
-        return response.json();
-    }).then(function(json){
-        db.collection("male")
-        .insert(json, function(err){
-            if (err) throw err;
-        }).catch(function(err){
-            console.error(err);
+    }).then(function(cache){
+
+        return cache.addAll([
+            "/AW3D_db/male.json",
+            "/AW3D_db/female.json",
+            "/AW3D_db/skeleton.json",
+            "/AW3D_db/materials.json",
+            "/AW3D_db/animations.json",
+        ]).then(function(){
+            return cache;
         });
-    });
 
-    await cache.match("/AW3D_db/female.json")
-    .then(function(response){
-        return response.json();
-    }).then(function(json){
-        db.collection("female")
-        .insert(json, function(err){
-            if (err) throw err;
-        }).catch(function(err){
-            console.error(err);
+    }).then(function(cache){
+
+        cache.match("/AW3D_db/animations.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+            db.collection("animations")
+            .insert(json, function(err){
+                if (err) throw err;
+            }).catch(function(err){
+                console.error(err);
+            });
         });
-    });
 
-    await cache.match("/AW3D_db/skeleton.json")
-    .then(function(response){
-        return response.json();
-    }).then(function(json){
-        db.collection("skeleton")
-        .insert(json, function(err){
-            if (err) throw err;
-        }).catch(function(err){
-            console.error(err);
+        cache.match("/AW3D_db/male.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+            db.collection("male")
+            .insert(json, function(err){
+                if (err) throw err;
+            }).catch(function(err){
+                console.error(err);
+            });
         });
-    });
 
-    await cache.match("/AW3D_db/materials.json")
-    .then(function(response){
-        return response.json();
-    }).then(function(json){
-        db.collection("materials")
-        .insert(json, function(err){
-            if (err) throw err;
-        }).catch(function(err){
-            console.error(err);
+        cache.match("/AW3D_db/female.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+            db.collection("female")
+            .insert(json, function(err){
+                if (err) throw err;
+            }).catch(function(err){
+                console.error(err);
+            });
         });
-    });
 
-    debugMode && console.log(`Database ${db.name} (v${db.version}) ready for use.`);
+        cache.match("/AW3D_db/skeleton.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+            db.collection("skeleton")
+            .insert(json, function(err){
+                if (err) throw err;
+            }).catch(function(err){
+                console.error(err);
+            });
+        });
+
+        cache.match("/AW3D_db/materials.json")
+        .then(function(response){
+            return response.json();
+        }).then(function(json){
+            db.collection("materials")
+            .insert(json, function(err){
+                if (err) throw err;
+            }).catch(function(err){
+                console.error(err);
+            });
+        });
+
+    }).then(function(){
+        debugMode && console.log(`Database ${db.name} (v${db.version}) ready for use.`);
+    }).catch(function(err){
+        console.error(err);
+    });
 
 }
 
@@ -152,16 +169,21 @@ function unistall(){
 
 }
 
-self.addEventListener("install", async function(e){
+self.addEventListener("install", function(e){
 
-    await drop();
-    await install();
+    drop().then(function(){
 
-    activate();
+        install();
+
+    }).then(function(){
+
+        activate();
+
+    });
 
 });
 
-self.addEventListener("activate", async function(e){
+self.addEventListener("activate", function(e){
 
     self.clients.claim();
 

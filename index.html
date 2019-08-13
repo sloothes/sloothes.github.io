@@ -77,7 +77,7 @@
 <script>
 (function(){
 
-    list = {
+    var list = {
 
         "Pages": {
 
@@ -125,7 +125,7 @@
 
     };
 
-    pages = {};
+    var pages = {};
 
     for ( var section in list ) {
         pages[ section ] = {};
@@ -138,11 +138,6 @@
         }
     }
 
-})();
-</script>
-
-<script>
-(function(){
 
     var panel = document.getElementById( 'panel' );
     var viewer = document.getElementById( 'viewer' );

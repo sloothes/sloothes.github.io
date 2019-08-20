@@ -10,10 +10,25 @@ self.importScripts(
     "/js/zangodb.min.js",
 );
 
+
 var socket = socketCluster.create({
     hostname: "anywhere3d.com",
     codecEngine: scCodecMinBin,
 });
+
+socket.on("connect", function(status){
+    debugMode && console.log("[service-worker]:", {"status": status});
+});
+
+socket.on("error", function (err) {
+    console.error( "[service-worker]:", err );
+});
+
+socket.on("authStateChange", function( state ){
+    debugMode && console.log("[service-worker]:", {"authStateChange": state});
+});
+
+
 
 function drop(){
 
@@ -176,28 +191,14 @@ function unistall(){
 
 }
 
-socket.on("connect", function(status){
-    debugMode && console.log("[service-worker]:", {"status": status});
+self.addEventListener("install", function(e){
 
-    self.addEventListener("install", function(e){
-
-        drop().then(install).then(activate);
-
-    });
-
-    self.addEventListener("activate", function(e){
-
-        self.clients.claim();
-
-    });
+    drop().then(install).then(activate);
 
 });
 
-socket.on("error", function (err) {
-    console.error( "[service-worker]:", err );
-});
+self.addEventListener("activate", function(e){
 
-socket.on("authStateChange", function( state ){
-    debugMode && console.log("[service-worker]:", {"authStateChange": state});
-});
+    self.clients.claim();
 
+});

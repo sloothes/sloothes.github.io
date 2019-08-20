@@ -4,9 +4,16 @@ self.version = 3.3;
 var debugMode = true;
 
 self.importScripts(
+    "/socketcluster.js",
+    "/sc-codec-min-bin.js",
     "/js/Objectid.js",
     "/js/zangodb.min.js",
 );
+
+var socket = socketCluster.create({
+    hostname: "anywhere3d.com",
+    codecEngine: scCodecMinBin,
+});
 
 function drop(){
 
@@ -169,36 +176,28 @@ function unistall(){
 
 }
 
-self.addEventListener("install", function(e){
+socket.on("connect", function(status){
+    debugMode && console.log("[service-worker]:", {"status": status});
 
-    drop().then(function(){
+    self.addEventListener("install", function(e){
 
-        install();
+        drop().then(install).then(activate);
 
-    }).then(function(){
+    });
 
-        activate();
+    self.addEventListener("activate", function(e){
+
+        self.clients.claim();
 
     });
 
 });
 
-self.addEventListener("activate", function(e){
-
-    self.clients.claim();
-
+socket.on("error", function (err) {
+    console.error( "[service-worker]:", err );
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
+socket.on("authStateChange", function( state ){
+    debugMode && console.log("[service-worker]:", {"authStateChange": state});
+});
 

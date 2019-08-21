@@ -1,5 +1,4 @@
-
-    var debugMode = true;
+//  sloothes.github.io/sw.js
 
     var serviceWorker = navigator.serviceWorker;
 

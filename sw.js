@@ -1,5 +1,7 @@
 //  sloothes.github.io/sw.js
 
+    var debugMode = true;
+
     var serviceWorker = navigator.serviceWorker;
 
     if ( serviceWorker ) {

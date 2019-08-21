@@ -28,9 +28,8 @@
     <link rel="stylesheet" href="/style.css">
 
     <script>var debugMode = true;</script>
-    <script src="/sw.js"></script>
-    <script src="/outfits/sw.js"></script>
     <script src="/js/loadjs.min.js"></script>
+    <script src="/service-worker/sw.js"></script>
 
 </head>
 
@@ -326,6 +325,7 @@
 </script>
 
 <script>
+
     var jsfiles = [
         "/js/w3.js", 
         "/js/store2.js", 
@@ -334,7 +334,9 @@
         "/js/bootbox.min.js", 
         "/js/DeviceDetector.js",
     ];
+
     loadjs( jsfiles, {async: false});
+
 </script>
 
 </body>

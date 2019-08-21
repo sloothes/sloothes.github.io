@@ -10,6 +10,9 @@
         "/sc-codec-min-bin.js",
     );
 
+//  IMPORTANT: service worker socket "authState" always is
+//  "unauthenticated" as dont have access to localStorage.
+/*
     var socket = socketCluster.create({
         hostname: "anywhere3d.com",
         codecEngine: scCodecMinBin,
@@ -26,7 +29,7 @@
     socket.on("authStateChange", function( state ){
         debugMode && console.log("[service-worker]:", {"authStateChange": state});
     });
-
+*/
 
     self.addEventListener("install", function(e){
 

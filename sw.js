@@ -1,5 +1,7 @@
 //  sloothes.github.io/sw.js
 
+(function(){
+
     var debugMode = true;
 
     var serviceWorker = navigator.serviceWorker;
@@ -46,3 +48,5 @@
             console.error(err);
         });
     }
+
+})();

@@ -1,0 +1,145 @@
+---
+permalink: /404.html
+---
+
+<div id="render-container" class="mbr-overlay" style="background-color:#000000;"></div>
+
+<script src="/js/three.js"></script>
+<script src="/js/EditorControls.js"></script>
+<script src="/js/Detector.js"></script>
+<script src="/js/Projector.js"></script>
+<script src="/js/KeyboardState.js"></script>
+<script src="/js/SceneHelpers.js"></script>
+
+<script>
+
+    var rendererSelector = "#render-container";
+    var fontPath = "/three/fonts/helvetiker_regular.typeface.json";
+
+    if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
+
+    mouse = new THREE.Vector2();
+    var Error404;
+    var container = $(rendererSelector)[0];
+
+    init( container );
+    animate();
+
+    function init( container ){
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
+        camera.position.set( 0, 3, -1000 );
+        light0 = newDirectionalLight(0xffffff, 1000, 1000, 1000, 0.5);
+        light1 = newDirectionalLight(0xffffff, 1000, 1000, -1000, 0.5);
+        light2 = newDirectionalLight(0xffffff, -1000, 1000, -1000, 0.5);
+        light3 = newDirectionalLight(0xffffff, -1000, 1000, 1000, 0.5);
+        light4 = newDirectionalLight(0xffffff, 0, -1000, 0, 0.5);
+        controls = new THREE.EditorControls(camera);
+        keyboard = new KeyboardState();
+        clock = new THREE.Clock();
+        renderer = new THREE.WebGLRenderer({ 
+            antialias:true, 
+            autoClear:true,
+            preserveDrawingBuffer:false 
+        });
+        renderer.shadowMapEnabled = true;
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight ); 
+        renderer.domElement.style.position = "relative";
+        container.appendChild( renderer.domElement );
+        window.addEventListener( 'resize', onWindowResize, false );
+        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
+        Error404 = pageNotFound();
+    }
+
+    function animate(){
+        requestAnimationFrame( animate );
+        render();
+        update();
+    }
+
+    function render(){
+        var delta = 0.75 * clock.getDelta();
+        camera.position.x += ( mouse.x - camera.position.x ) * 0.05;
+        camera.position.y = THREE.Math.clamp( camera.position.y + ( - mouse.y - camera.position.y ) * 0.05, 0, 10000 );
+        camera.lookAt( scene.position );
+        renderer.render( scene, camera );
+    }
+
+    function onWindowResize() {
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
+    function onDocumentMouseMove( event ) {
+        mouse.x = ( event.clientX - windowHalfX );
+        mouse.y = ( event.clientY - windowHalfY );
+    }
+
+    function update() {
+        var delta = clock.getDelta();
+        var	time = clock.getElapsedTime();
+        if (keyboard) keyboard.update( delta );
+    }
+
+    function pageNotFound(){
+        var loader = new THREE.FontLoader();
+        loader.load( fontPath, function ( response ) {
+            font = response;
+            var group = new THREE.Group();
+            group.name = "pageNotFound";
+            scene.add(group);
+            //  Font Material
+            var materialFace = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+            var materialSide = new THREE.MeshBasicMaterial( { color: 0x888888 } );
+            var materialArray = [ materialFace, materialSide ];
+            var textMaterial = new THREE.MeshFaceMaterial(materialArray);
+            h0 = { 
+                size: 40, 
+                height: 2,   
+                curveSegments: 10, 
+                font: font, 
+                weight: "normal", 
+                style: "normal", 
+                bevelThickness: 1, 
+                bevelSize: 1.2, 
+                bevelEnabled: false, 
+                material: 0, 
+                extrudeMaterial: 1
+            };
+            //  404                    
+            var text = "404";
+            var textGeometry = new THREE.TextGeometry( text, h0 );
+            var textMesh = new THREE.Mesh(textGeometry, textMaterial );
+            textGeometry.computeBoundingBox();
+            var textWidth = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
+            textMesh.scale.set( 10, 10, 30); 
+            textMesh.geometry.center();
+            textMesh.rotation.set(0, -Math.PI, 0);
+            textMesh.position.set( 0, -50, 0 );
+            group.add(textMesh); 
+            //  Page not found
+            var text = "Page not found";
+            var textGeometry = new THREE.TextGeometry( text, h0 );
+            var textMesh = new THREE.Mesh(textGeometry, textMaterial );
+            textGeometry.computeBoundingBox();
+            var textWidth = textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x;
+            textMesh.scale.set( 2, 2, 15); 
+            textMesh.geometry.center();
+            textMesh.rotation.set(0, -Math.PI, 0);
+            textMesh.position.set( 0, 250, 0 );
+            group.add(textMesh); 
+
+            return group;
+        });
+    }
+	
+</script>

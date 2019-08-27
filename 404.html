@@ -50,11 +50,11 @@ permalink: /404.html
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
         camera.position.set( 0, 3, -1000 );
-        light0 = newDirectionalLight(0xffffff, 1000, 1000, 1000, 0.5);
-        light1 = newDirectionalLight(0xffffff, 1000, 1000, -1000, 0.5);
-        light2 = newDirectionalLight(0xffffff, -1000, 1000, -1000, 0.5);
-        light3 = newDirectionalLight(0xffffff, -1000, 1000, 1000, 0.5);
-        light4 = newDirectionalLight(0xffffff, 0, -1000, 0, 0.5);
+        light0 = new DirectionalLight(0xffffff, 1000, 1000, 1000, 0.5);
+        light1 = new DirectionalLight(0xffffff, 1000, 1000, -1000, 0.5);
+        light2 = new DirectionalLight(0xffffff, -1000, 1000, -1000, 0.5);
+        light3 = new DirectionalLight(0xffffff, -1000, 1000, 1000, 0.5);
+        light4 = new DirectionalLight(0xffffff, 0, -1000, 0, 0.5);
         controls = new THREE.EditorControls(camera);
         keyboard = new KeyboardState();
         clock = new THREE.Clock();

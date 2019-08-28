@@ -40,9 +40,14 @@
     <link rel="stylesheet" href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css">
 
     <script>var debugMode = true;</script>
-    <script src="/js/loadjs.min.js"></script>
     <script src="/service-worker/sw.js"></script>
-    <script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" id="snipcart" data-api-key="MGY1ZGNjMWItZTk5NS00ZTFjLWExMGMtOWVlNjQxM2I2ZmYwNjM3MDI1NTA1ODY4NDc4NTkw"></script>
+    <script src="/js/w3.js"></script> 
+    <script src="/js/store2.js"></script>
+    <script src="/js/loadjs.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootbox.min.js"></script>
+    <script src="/js/DeviceDetector.js"></script>
 
 </head>
 
@@ -347,19 +352,22 @@
 </script>
 
 <script>
-
-    var jsfiles = [
+/*
+    var files = [
         "/js/w3.js", 
         "/js/store2.js", 
         "/js/jquery.min.js", 
         "/js/bootstrap.min.js", 
         "/js/bootbox.min.js", 
         "/js/DeviceDetector.js",
+
     ];
 
-    loadjs( jsfiles, {async: false});
-
+//  loadjs( files, {async: false});
+*/
 </script>
+
+<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" id="snipcart" data-api-key="MGY1ZGNjMWItZTk5NS00ZTFjLWExMGMtOWVlNjQxM2I2ZmYwNjM3MDI1NTA1ODY4NDc4NTkw"></script>
 
 </body>
 </html>

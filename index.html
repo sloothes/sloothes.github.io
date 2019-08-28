@@ -58,10 +58,12 @@
         cursor: pointer;
         margin-left:15px;
     }
+
     #right-side-content {
         position:absolute; left:25px; top:60px; right:10px; bottom:40px; 
         padding: 0px 20px 0px 20px; overflow:auto; 
     }
+
     a.none-deco:focus,
     a.none-deco:hover, 
     a.none-deco:active, 
@@ -83,7 +85,12 @@
         <input type="text" id="filterInput" placeholder="Type to filter"/>
         <a href="#" id="clearFilterButton" >x</a>
     </div>
+
     <div id="content"></div>
+
+    <div><a href="//twitter.com/anywhere3d" target="_blank">Twitter</a></div>
+    <div><a href="//www.facebook.com/GoogleWebSpace" target="_blank">Facebook</a></div>
+
 </div>
 
 <section class="mbr-section" id="body-section">
@@ -136,8 +143,6 @@
                 ["About", "/about"],
                 ["Forum", "/forum"],
                 ["Gallery", "/gallery"],
-                ["Twitter", "//twitter.com/anywhere3d"],
-                ["Facebook", "//www.facebook.com/GoogleWebSpace"],
             ],
 
             "Marketplace": [
@@ -363,22 +368,6 @@
     if ( window.location.hash.length > 0 ) goToHash();
 
 })();
-</script>
-
-<script>
-/*
-    var files = [
-        "/js/w3.js", 
-        "/js/store2.js", 
-        "/js/jquery.min.js", 
-        "/js/bootstrap.min.js", 
-        "/js/bootbox.min.js", 
-        "/js/DeviceDetector.js",
-
-    ];
-
-//  loadjs( files, {async: false});
-*/
 </script>
 
 </body>

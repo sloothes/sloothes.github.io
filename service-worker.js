@@ -11,7 +11,8 @@
     );
 
 //  IMPORTANT: service worker socket "authState" always is
-//  "unauthenticated" as dont have access to localStorage.
+//  "unauthenticated" as doesn't have access to localStorage.
+
 /*
     var socket = socketCluster.create({
         hostname: "anywhere3d.com",
@@ -46,14 +47,14 @@
 
     function drop(){
 
-        db = new zango.Db( "AW3D" );
+        var db = new zango.Db( "AW3D" );
 
         return db.open().then(function(){
-            debugMode && console.log(`Database ${db.name} (v${db.version}) ready to drop.`);
+            debugMode && console.log("Database " + db.name + " (v" + db.version + ") ready to drop.");
         }).then(function(){
 
             return db.drop().then(function(){
-                debugMode && console.log(`Database ${db.name} (v${db.version}) dropped.`);
+                debugMode && console.log("Database " + db.name + " (v" + db.version + ") dropped.");
             });
 
         }).catch(function(err){
@@ -66,10 +67,10 @@
 
     //  not tested yet.
 
-        db = new zango.Db( "AW3D" );
+        var db = new zango.Db( "AW3D" );
 
         return db.open().then(function(){
-            debugMode && console.log(`Database ${db.name} (v${db.version}) ready for cleanup.`);
+            debugMode && console.log("Database " + db.name + " (v" + db.version + ") ready for cleanup.");
         }).then(function(){
 
             var cleanups = [];
@@ -97,7 +98,7 @@
         }).then(function(cleanups){
             
             return Promise.all(cleanups).then(function(){
-                debugMode && console.log(`Database ${db.name} (v${db.version}) cleared.`);
+                debugMode && console.log("Database " + db.name + " (v" + db.version + ") cleared.");
             });
 
         //  or...
@@ -114,7 +115,7 @@
 
     function install(){
 
-        db = new zango.Db( "AW3D", 1, {
+        var db = new zango.Db( "AW3D", 1, {
 
             male:       true,
             female:     true,
@@ -128,7 +129,7 @@
         return db.open(function(err, database){
             if (err) console.error(err);
         }).then( function(){
-            debugMode && console.log(`Database ${db.name} (v${db.version}) ready for install.`);
+            debugMode && console.log("Database " + db.name + " (v" + db.version + ") ready for install.");
         }).catch(function(err){
             console.error(err);
         }).then(function(){
@@ -151,6 +152,8 @@
             });
 
         }).then(function(cache){
+
+            debugMode && console.log("Instaling database " + db.name + " (v" + db.version + ") ...");
 
             cache.match("/AW3D_db/animations.json")
             .then(function(response){
@@ -213,7 +216,7 @@
             });
 
         }).then(function(){
-            debugMode && console.log(`Database ${db.name} (v${db.version}) ready for use.`);
+            debugMode && console.log("Database " + db.name + " (v" + db.version + ") ready for use.");
         }).catch(function(err){
             console.error(err);
         });
@@ -237,8 +240,8 @@
             return self.clients.matchAll();
         }).then(function(clients) {
             clients.forEach(function(client){
-                client.navigate(client.url);  // it will re-install on reload!
-                console.log(`service worker unistalled from client "${client.url}"`);
+                client.navigate(client.url);  // will be re-installed on reload!
+                console.log("service worker unistalled from client " + client.url);
             });
         });
     }
